@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\TaskBoard;
+use App\Livewire\QuickAddTask;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +21,13 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
     
     Route::resource('projects', ProjectController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    // Route for task board view of a project
+    Route::get('projects/{project}/board', TaskBoard::class)->name('projects.board');
+
+    // Route for quick task creation (optional, if used standalone)
+    Route::get('projects/{project}/tasks/quick-add', QuickAddTask::class)->name('projects.tasks.quick-add');
 });
 
 require __DIR__.'/auth.php';
