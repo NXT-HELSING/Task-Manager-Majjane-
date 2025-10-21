@@ -7,19 +7,10 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    // Display all projects for the logged-in user (owner OR member)
+
     public function index()
     {
-        $user = auth()->user();
-
-        // Get projects the user owns OR is a member of
-        $projects = Project::where('user_id', $user->id)
-            ->orWhereHas('members', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            })
-            ->withCount('tasks')
-            ->get();
-
+        $projects = auth()->user()->projects;
         return view('projects.index', compact('projects'));
     }
 
@@ -30,51 +21,52 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'status' => 'required',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'status' => 'required|in:active,on_hold,completed',
+            'due_date' => 'nullable|date',
         ]);
 
-        Project::create([
-            'user_id' => auth()->id(),
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-        ]);
+        auth()->user()->projects()->create($validated);
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully!');
     }
 
     public function show(Project $project)
     {
-        // Load relationships: members + tasks + owner
-        $project->load(['members', 'tasks', 'owner']);
-
+        $this->authorize('view', $project);
         return view('projects.show', compact('project'));
     }
 
     public function edit(Project $project)
     {
+        $this->authorize('update', $project);
         return view('projects.edit', compact('project'));
     }
 
     public function update(Request $request, Project $project)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'status' => 'required',
+        $this->authorize('update', $project);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'status' => 'required|in:active,on_hold,completed',
+            'progress' => 'nullable|integer|min:0|max:100',
+            'due_date' => 'nullable|date',
         ]);
 
-        $project->update($request->all());
+        $project->update($validated);
 
-        return redirect()->route('projects.index')->with('success', 'Project updated successfully!');
+        return redirect()->route('projects.show', $project)->with('success', 'Project updated successfully!');
     }
 
     public function destroy(Project $project)
     {
+        $this->authorize('delete', $project);
         $project->delete();
+
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully!');
     }
 }
