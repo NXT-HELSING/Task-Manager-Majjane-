@@ -10,7 +10,7 @@
                         <i class="bi bi-person-plus"></i>
                     </div>
                     <h2 class="auth-title">Create Account</h2>
-                    <p class="auth-subtitle">Join TaskFlow Pro and boost your productivity</p>
+                    <p class="auth-subtitle">Rejoignez Task Manager Majjane Test et boostez votre productivité</p>
                 </div>
 
                 <form method="POST" action="{{ route('register') }}">

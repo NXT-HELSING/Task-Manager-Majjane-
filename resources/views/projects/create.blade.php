@@ -3,26 +3,26 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-lg-8">
-        <!-- Page Header -->
+        <!-- En-tête de la page -->
         <div class="page-header-form mb-4">
             <a href="{{ route('projects.index') }}" class="btn-back">
-                <i class="bi bi-arrow-left"></i> Back to Projects
+                <i class="bi bi-arrow-left"></i> Retour aux Projets
             </a>
             <h1 class="form-page-title">
-                <i class="bi bi-plus-circle-dotted me-2"></i>Create New Project
+                <i class="bi bi-plus-circle-dotted me-2"></i>Créer un nouveau projet
             </h1>
-            <p class="form-page-subtitle">Fill in the details to create your new project</p>
+            <p class="form-page-subtitle">Remplissez les détails pour créer votre nouveau projet</p>
         </div>
 
-        <!-- Form Card -->
+        <!-- Carte de formulaire -->
         <div class="form-card">
             <form action="{{ route('projects.store') }}" method="POST">
                 @csrf
 
-                <!-- Title -->
+                <!-- Titre -->
                 <div class="form-group-custom mb-4">
                     <label for="title" class="form-label-custom">
-                        <i class="bi bi-text-left me-2"></i>Project Title
+                        <i class="bi bi-text-left me-2"></i>Titre du projet
                     </label>
                     <input 
                         type="text" 
@@ -30,7 +30,7 @@
                         id="title" 
                         name="title" 
                         value="{{ old('title') }}" 
-                        placeholder="Enter project title..."
+                        placeholder="Entrez le titre du projet..."
                         required
                         autofocus
                     >
@@ -49,7 +49,7 @@
                         id="description" 
                         name="description" 
                         rows="5" 
-                        placeholder="Describe your project goals, scope, and objectives..."
+                        placeholder="Décrivez les objectifs, le périmètre et les buts de votre projet..."
                         required
                     >{{ old('description') }}</textarea>
                     @error('description')
@@ -57,13 +57,13 @@
                     @enderror
                 </div>
 
-                <!-- Status and Due Date Row -->
+                <!-- Ligne Statut et Date d'échéance -->
                 <div class="row mb-4">
-                    <!-- Status -->
+                    <!-- Statut -->
                     <div class="col-md-6">
                         <div class="form-group-custom">
                             <label for="status" class="form-label-custom">
-                                <i class="bi bi-circle-fill me-2"></i>Status
+                                <i class="bi bi-circle-fill me-2"></i>Statut
                             </label>
                             <select 
                                 class="form-control-modern @error('status') is-invalid @enderror" 
@@ -71,27 +71,40 @@
                                 name="status"
                                 required
                             >
+                                <!-- 
+                                    Assumption: The issue is a mismatch between the form value and what's expected in the database.
+                                    According to the error, the database expects 'archived' but the controller code checks/sets a different value.
+                                    The user's database value is likely "archived", NOT "archive". So leave value="archived" here.
+                                    If the database ENUM is, for example, "active,archived,completed", then these values are correct.
+                                    If the mapping is needed, it should be handled in the controller, not here.
+                                -->
                                 <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>
-                                    Active
+                                    Actif
                                 </option>
-                                <option value="on_hold" {{ old('status') == 'on_hold' ? 'selected' : '' }}>
-                                    On Hold
+                                <option value="archived" {{ old('status') == 'archived' ? 'selected' : '' }}>
+                                    Archivé
                                 </option>
                                 <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>
-                                    Completed
+                                    Terminé
                                 </option>
                             </select>
                             @error('status')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                            @if(session('status_error'))
+                                <div class="invalid-feedback">{{ session('status_error') }}</div>
+                            @endif
                         </div>
+                        @if(isset($statusInfo))
+                            <div class="alert alert-info mt-2">{{ $statusInfo }}</div>
+                        @endif
                     </div>
 
-                    <!-- Due Date -->
+                    <!-- Date d'échéance -->
                     <div class="col-md-6">
                         <div class="form-group-custom">
                             <label for="due_date" class="form-label-custom">
-                                <i class="bi bi-calendar-event me-2"></i>Due Date
+                                <i class="bi bi-calendar-event me-2"></i>Date d'échéance
                             </label>
                             <input 
                                 type="date" 
@@ -107,13 +120,13 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
+                <!-- Boutons d'action -->
                 <div class="form-actions">
                     <a href="{{ route('projects.index') }}" class="btn btn-secondary-custom">
-                        <i class="bi bi-x-circle me-2"></i>Cancel
+                        <i class="bi bi-x-circle me-2"></i>Annuler
                     </a>
                     <button type="submit" class="btn btn-gradient">
-                        <i class="bi bi-check-circle me-2"></i>Create Project
+                        <i class="bi bi-check-circle me-2"></i>Créer le projet
                     </button>
                 </div>
             </form>
@@ -122,7 +135,7 @@
 </div>
 
 <style>
-    /* Modern Create Project Design */
+    /* Design moderne pour la création de projet */
     .page-header-form {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border-radius: 20px;
@@ -345,7 +358,7 @@
         }
     }
 
-    /* Mobile Responsive Styles */
+    /* Styles mobiles responsives */
     @media (max-width: 768px) {
         .form-page-title {
             font-size: 1.8rem;

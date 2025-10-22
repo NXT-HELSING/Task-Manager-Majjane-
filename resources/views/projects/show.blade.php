@@ -13,8 +13,8 @@
         <span class="badge badge-status badge-{{ $project->status }}">
             @if($project->status === 'active')
                 <i class="bi bi-play-circle me-1"></i> Actif
-            @elseif($project->status === 'on_hold')
-                <i class="bi bi-pause-circle me-1"></i> En Attente
+            @elseif($project->status === 'archived')
+                <i class="bi bi-pause-circle me-1"></i> Archivé
             @else
                 <i class="bi bi-check-circle me-1"></i> Terminé
             @endif
@@ -152,7 +152,7 @@
         color: white;
     }
 
-    .badge-on_hold {
+    .badge-archived {
         background: linear-gradient(135deg, #ed8936, #dd6b20);
         color: white;
     }

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'TaskFlow Pro') }}</title>
+    <title>{{ config('app.name', 'Task Manager Majjane Test') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -285,7 +285,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand" href="{{ route('projects.index') }}">
-                <i class="bi bi-kanban"></i> TaskFlow Pro
+                <i class="bi bi-kanban"></i> Task Manager Majjane Test
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -297,12 +297,12 @@
                     @auth
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('projects.index') }}">
-                                <i class="bi bi-grid-3x3-gap"></i> Projects
+                                <i class="bi bi-grid-3x3-gap"></i> Projets
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('projects.create') }}">
-                                <i class="bi bi-plus-circle"></i> New Project
+                                <i class="bi bi-plus-circle"></i> Nouveau Projet
                             </a>
                         </li>
                         <li class="nav-item dropdown ms-3">
@@ -315,7 +315,7 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                        <i class="bi bi-person-circle"></i> Profile
+                                        <i class="bi bi-person-circle"></i> Profil
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider" style="border-color: var(--border-color);"></li>
@@ -323,7 +323,7 @@
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit" class="dropdown-item">
-                                            <i class="bi bi-box-arrow-right"></i> Logout
+                                            <i class="bi bi-box-arrow-right"></i> Déconnexion
                                         </button>
                                     </form>
                                 </li>
@@ -331,11 +331,11 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            <a class="nav-link" href="{{ route('login') }}">Connexion</a>
                         </li>
                         <li class="nav-item ms-2">
                             <a href="{{ route('register') }}" class="btn btn-gradient">
-                                Get Started
+                                Commencer
                             </a>
                         </li>
                     @endauth
@@ -373,7 +373,7 @@
     <footer class="footer-custom text-center">
         <div class="container">
             <p class="mb-0" style="color: var(--text-secondary);">
-                &copy; {{ date('Y') }} TaskFlow Pro. Crafted with <i class="bi bi-heart-fill text-danger"></i>
+                &copy; {{ date('Y') }} Task Manager Majjane Test. Crafted with <i class="bi bi-heart-fill text-danger"></i>
             </p>
         </div>
     </footer>

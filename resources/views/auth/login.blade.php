@@ -10,7 +10,7 @@
                         <i class="bi bi-box-arrow-in-right"></i>
                     </div>
                     <h2 class="auth-title">Welcome Back</h2>
-                    <p class="auth-subtitle">Sign in to continue to TaskFlow Pro</p>
+                    <p class="auth-subtitle">Connectez-vous pour continuer sur Task Manager Majjane Test</p>
                 </div>
 
                 <form method="POST" action="{{ route('login') }}">
