@@ -123,4 +123,14 @@ class ProjectController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Projet supprimé avec succès !');
     }
+
+    public function assignedTasks()
+    {
+        $assignedTasks = auth()->user()->tasksAssigned()
+            ->with(['project', 'assignee'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('projects.assigned-tasks', compact('assignedTasks'));
+    }
 }

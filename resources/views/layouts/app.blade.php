@@ -305,6 +305,11 @@
                                 <i class="bi bi-plus-circle"></i> Nouveau Projet
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('assigned-tasks') }}">
+                                <i class="bi bi-person-check"></i> Mes Tâches
+                            </a>
+                        </li>
                         <li class="nav-item dropdown ms-3">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
                                 <div class="avatar-circle me-2">

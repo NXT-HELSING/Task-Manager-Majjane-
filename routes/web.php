@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,17 +21,16 @@ Route::get('/', function () {
 
 // Optional: you can still keep dashboard route (but redirect it too)
 Route::get('/dashboard', function () {
-    return redirect()->route('projects.index');
+    return redirect()->route('assigned-tasks');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Protected routes (need login)
 Route::middleware(['auth'])->group(function () {
     // Project management (CRUD) - put resource routes inside auth middleware
     Route::resource('projects', ProjectController::class);
-
-    // nested routes for tasks
-    Route::get('projects/{project}/tasks/create', [TaskController::class, 'create'])->name('projects.tasks.create');
-    Route::post('projects/{project}/tasks', [TaskController::class, 'store'])->name('projects.tasks.store');
+    
+    // assigned tasks route
+    Route::get('assigned-tasks', [ProjectController::class, 'assignedTasks'])->name('assigned-tasks');
 
     // Profile management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
