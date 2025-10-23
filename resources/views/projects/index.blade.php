@@ -41,11 +41,13 @@
                                 <h5 class="project-title">{{ $project->title }}</h5>
                                 <span class="badge badge-status badge-{{ $project->status }}">
                                     @if($project->status === 'active')
-                                        <i class="bi bi-play-circle"></i> Actif
-                                    @elseif($project->status === 'archived')
-                                        <i class="bi bi-pause-circle"></i> Archivé
+                                        <i class="bi bi-play-circle"></i> ACTIF
+                                    @elseif($project->status === 'on_hold')
+                                        <i class="bi bi-pause-circle"></i> ARCHIVÉ
+                                    @elseif($project->status === 'completed')
+                                        <i class="bi bi-check-circle"></i> TERMINÉ
                                     @else
-                                        <i class="bi bi-check-circle"></i> Terminé
+                                        <i class="bi bi-question-circle"></i> {{ strtoupper($project->status) }}
                                     @endif
                                 </span>
                             </div>
@@ -332,12 +334,20 @@
     0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.7);}
     50% { box-shadow: 0 0 0 8px rgba(16,185,129,0);}
 }
+.badge-on_hold {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+}
 .badge-archived {
     background: linear-gradient(135deg, #f59e0b, #d97706);
     color: white;
 }
 .badge-completed {
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+}
+.badge-status:not(.badge-active):not(.badge-on_hold):not(.badge-archived):not(.badge-completed) {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
     color: white;
 }
 .badge-status:hover {

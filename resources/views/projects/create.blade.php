@@ -81,7 +81,7 @@
                                 <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>
                                     Actif
                                 </option>
-                                <option value="archived" {{ old('status') == 'archived' ? 'selected' : '' }}>
+                                <option value="on_hold" {{ old('status') == 'on_hold' ? 'selected' : '' }}>
                                     Archivé
                                 </option>
                                 <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>

@@ -69,7 +69,7 @@
                                 <option value="active" {{ old('status', $project->status) == 'active' ? 'selected' : '' }}>
                                     Actif
                                 </option>
-                                <option value="archived" {{ old('status', $project->status) == 'archived' ? 'selected' : '' }}>
+                                <option value="on_hold" {{ old('status', $project->status) == 'on_hold' ? 'selected' : '' }}>
                                     Archivé
                                 </option>
                                 <option value="completed" {{ old('status', $project->status) == 'completed' ? 'selected' : '' }}>
